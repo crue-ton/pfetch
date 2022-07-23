@@ -1,82 +1,73 @@
-# pfetch
+<p align="center"><img src="https://user-images.githubusercontent.com/6799467/65944518-68834d80-e421-11e9-9b14-6ca26a16108a.png" width="350px"></p>
+<h1 align="center">pfetch</h1>
+<p align="center">A pretty system information tool written in POSIX sh</p><br>
 
-A pretty system information tool written in POSIX `sh`.
+<img src="https://user-images.githubusercontent.com/6799467/65945384-5bfff480-e423-11e9-863e-4e7cf16eb648.png" width="40%" align="right">
 
-The goal of this project is to implement a simple system information tool in POSIX `sh` using features built into the language itself (*where possible*).
+The goal of this project is to implement a simple system
+information tool in POSIX `sh` using features built into
+the language itself (*where possible*).
 
-The source code is highly documented and I hope it will act as a learning resource for POSIX `sh` and simple information detection across various different operating systems.
+The source code is highly documented and I hope it will
+act as a learning resource for POSIX `sh` and simple
+information detection across various different operating
+systems.
 
-If anything in the source code is unclear or is lacking in its explanation, open an issue. Sometimes you get too close to something and you fail to see the "bigger picture"!
+If anything in the source code is unclear or is lacking
+in its explanation, open an issue. Sometimes you get too
+close to something and you fail to see the "bigger
+picture"!
 
-```sh
-➜ pfetch
-    ___       goldie@KISS
-   (.· |      os     KISS Linux
-   (<> |      host   Lenovo YOGA 900-13ISK
-  / __  \     kernel 5.3.1-coffee
- ( /  \ /|    uptime 6h 20m
-_/\ __)/_)    pkgs   130
-\/-____\/     memory 1721M / 7942M
-```
+<br>
+<br>
+<br>
+<br>
 
 ## OS support
 
+- **Linux**
+    - Alpine Linux, Arch Linux, Arco Linux, Artix Linux, CentOS, Dahlia, Debian, Devuan, Elementary, EndeavourOS, Fedora, Garuda Linux, Gentoo, Guix, Hyperbola, instantOS, KISS Linux, Linux Lite, Linux Mint, Mageia, Manjaro, MX Linux, NixOS, OpenSUSE, Parabola, Pop!\_OS, PureOS, Slackware, Solus, Ubuntu and Void Linux.
+    - All other distributions are supported with a generic penguin logo.
+- **Android**
+- **BSD**
+    - DragonflyBSD, FreeBSD, NetBSD and OpenBSD.
+- **Windows**
+    - Windows subsystem for Linux.
+    - Windows Powershell (Requires extra tinkering for easy use)
+    - Windows CMD (Requires extra tinkering for easy use)
 - **Haiku**
 - **MacOS**
 - **Minix**
 - **Solaris**
-- **BSD**
-    - DragonflyBSD
-    - FreeBSD
-    - NetBSD
-    - OpenBSD
-- **Windows**
-    - Windows subsystem for Linux.
-- **Linux**
-    - Alpine Linux
-    - Arch Linux
-    - Arco Linux
-    - Artix Linux
-    - CentOS
-    - Debian
-    - Elementary
-    - Fedora
-    - Gentoo
-    - Guix
-    - Hyperbola
-    - KISS Linux
-    - Linux Lite
-    - Linux Mint
-    - Mageia
-    - Manjaro
-    - MX Linux
-    - NixOS
-    - OpenSUSE
-    - Parabola
-    - Pop!\_OS
-    - PureOS
-    - Slackware
-    - Ubuntu
-    - Void Linux
-    - Other distributions are supported with a generic penguin logo.
-
-## TODO
-
-- [ ] Add optional and additional information detection.
-    - [ ] Terminal Emulator ([#12](https://github.com/dylanaraps/pfetch/pull/12))
-        - The way I implement this in `neofetch` is interesting.
-- [ ] Expand operating system support.
-    - [ ] Android
-    - [ ] iOS
-    - [ ] AIX ([#7](https://github.com/dylanaraps/pfetch/issues/7))
-    - [ ] IRIX ([#8](https://github.com/dylanaraps/pfetch/issues/8))
-    - [ ] FreeMiNT ([#9](https://github.com/dylanaraps/pfetch/issues/9))
-    - [ ] Windows ([#10](https://github.com/dylanaraps/pfetch/issues/10))
-        - [ ] CYGWIN
-        - [ ] MSYS
-        - [ ] MINGW
+- **IRIX**
+- **SerenityOS**
 
 ## Configuration
+
+For users using pwsh on Windows, add this to your $Profile
+
+```powershell
+# I would just git clone the repo in the home directoy
+Function pfetch {sh $env:UserProfile\pfetch\pfetch}
+```
+
+For users using cmd on Windows, do this:
+- Make a doskey macro file, preferablly in `C:\bat\macros.doskey` <-- macros file
+- Go to Registry Editor
+- Go to Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Conmand Processor
+- Make a new string value called `Autorun`
+- Right click on it and click `Modify...`
+- Change the value path to:
+```cmd
+DOSKEY /MACROFILE="C:\bat\macros.doskey"
+```
+- Edit the macros.doskey file to something like this:
+```cmd
+pfetch=sh %UserProfile%\pfetch\pfetch
+```
+
+- Tada! Just run a new instance of cmd!
+
 
 `pfetch` is configured through environment variables.
 
@@ -95,10 +86,20 @@ PF_INFO="ascii"
 # Example: Only Information.
 PF_INFO="title os host kernel uptime pkgs memory"
 
+# A file to source before running pfetch.
+# Default: unset
+# Valid: A shell script
+PF_SOURCE=""
+
 # Separator between info name and info data.
 # Default: unset
 # Valid: string
 PF_SEP=":"
+
+# Enable/Disable colors in output:
+# Default: 1
+# Valid: 1 (enabled), 0 (disabled)
+PF_COLOR=1
 
 # Color of info names:
 # Default: unset (auto)
@@ -108,7 +109,7 @@ PF_COL1=4
 # Color of info data:
 # Default: unset (auto)
 # Valid: 0-9
-PF_COL2=7
+PF_COL2=9
 
 # Color of title data:
 # Default: unset (auto)
