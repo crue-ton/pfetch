@@ -6,10 +6,6 @@
 
 # Wrapper around all escape sequences used by pfetch to allow for
 # greater control over which sequences are used (if any at all).
-
-# Configuration
-PF_INFO="ascii title os host kernel uptime pkgs"
-
 esc() {
     case $1 in
         CUU) e="${esc_c}[${2}A" ;; # cursor up
@@ -185,16 +181,16 @@ get_title() {
 
     # Add escape sequences for coloring to user and host name. As we embed
     # them directly in the arguments passed to log(), we cannot use esc_p().
-#   esc SGR 1
-#   user=$e$user
-#   esc SGR "3${PF_COL3:-1}"
-#   user=$e$user
-#   esc SGR 1
-#   user=$user$e
-#   esc SGR 1
-#   hostname=$e$hostname
-#   esc SGR "3${PF_COL3:-1}"
-#   hostname=$e$hostname
+    esc SGR 1
+    user=$e$user
+    esc SGR "3${PF_COL3:-1}"
+    user=$e$user
+    esc SGR 1
+    user=$user$e
+    esc SGR 1
+    hostname=$e$hostname
+    esc SGR "3${PF_COL3:-1}"
+    hostname=$e$hostname
 
     log "${user}@${hostname}" " " " " >&6
 }
