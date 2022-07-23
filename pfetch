@@ -1,5 +1,4 @@
 #!/bin/sh
-#!/bin/sh
 #
 # pfetch - Simple POSIX sh fetch script.
 
@@ -493,7 +492,7 @@ get_host() {
         case $word in
            (To      | [Bb]e      | [Ff]illed | [Bb]y  | O.E.M.  | OEM  |\
             Not     | Applicable | Specified | System | Product | Name |\
-            Version | Undefined  | Default   | string | INVALID |      | os |\
+            Version | Undefined  | Default   | string | INVALID | �    | os |\
             Type1ProductConfigId )
                 continue
             ;;
@@ -580,6 +579,7 @@ get_uptime() {
     log uptime "${uptime:-0m}" >&6
 }
 
+sub="0"
 get_pkgs() {
     # This works by first checking for which package managers are
     # installed to calculate $sub and then printing each package
@@ -1967,8 +1967,12 @@ main() {
             return 0
         ;;
 
-        -d)
-            # Below exec is not run, stderr is shown.
+        -u)
+            printf 'Updating...\n'
+            dlpath="$(command -v ${0##*/})"
+            curl -s -o $dlpath https://raw.githubusercontent.com/OldWorldOrdr/pfetch/windows/pfetch
+            printf 'Done.\n'
+            return 0
         ;;
 
         '')
@@ -1978,7 +1982,7 @@ main() {
         *)
             cat <<EOF
 ${0##*/}     show system information
-${0##*/} -d  show stderr (debug mode)
+${0##*/} -u  update ${0##*/} to the latest version
 ${0##*/} -v  show version information
 EOF
             return 0
